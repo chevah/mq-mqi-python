@@ -51,27 +51,25 @@ else:
             mq_file_path + '/lib/ccsid_part2.tbl',
             ]),
         ('lib/ibm-mq/lib64', [
-            mq_file_path + '/lib64/libmqe.so',
             mq_file_path + '/lib64/libmqe_r.so',
-            mq_file_path + '/lib64/libmqic.so',
-            mq_file_path + '/lib64/libmqic_r.so',
+            mq_file_path + '/lib64/libmqe_r.so',
             mq_file_path + '/lib64/libcurl.so',
             ]),
         ('lib/ibm-mq/gskit8/lib64', [
             mq_file_path + '/gskit8/lib64/libgsk8acmeidup_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8cms_64.so',
+            mq_file_path + '/gskit8/lib64/libgsk8cms_64.so',  # curl
             mq_file_path + '/gskit8/lib64/libgsk8dbfl_64.so',
             mq_file_path + '/gskit8/lib64/libgsk8iccs_64.so',
             mq_file_path + '/gskit8/lib64/libgsk8kicc_64.so',
             mq_file_path + '/gskit8/lib64/libgsk8km_64.so',
             mq_file_path + '/gskit8/lib64/libgsk8p11_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8ssl_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8sys_64.so',
+            mq_file_path + '/gskit8/lib64/libgsk8ssl_64.so',  # curl
+            mq_file_path + '/gskit8/lib64/libgsk8sys_64.so',  # curl
             mq_file_path + '/gskit8/lib64/libgsk8valn_64.so',
             ]),
         ('lib/ibm-mq/gskit8/lib64/N/icc/icclib', [
             mq_file_path + '/gskit8/lib64/N/icc/icclib/ICCSIG.txt',
-            mq_file_path + '/gskit8/lib64/N/icc/icclib/libicclib085.so',
+            mq_file_path + '/gskit8/lib64/N/icc/icclib/libicclib085.so',  # curl
             ]),
     ]
 

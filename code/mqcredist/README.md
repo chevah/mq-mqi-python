@@ -6,6 +6,11 @@ Designed to be used together with `ibmmq`.
 
 They only support Windows X64 and Linux GLIC X64.
 
+For all the other platforms, an empty wheel is generated.
+This is designed to help unify the requirements for the dev tools.
+You can then handle the empty wheel at the application level.
+
+
 ## Linux Usage
 
 You need to use `LD_LIBRARY_PATH` to load the IBM C shared libraries.
@@ -15,6 +20,7 @@ They will be installed inside the virtual environment, at `lib/ibm-mq` path.
 export LD_LIBRARY_PATH=YOUR_VENV/lib/ibm-mq/lib64/:YOUR_VENV/lib/ibm-mq/gskit8/lib64/
 python your_ibm_mq_sample_code.py
 ```
+
 
 ## Windows Usage
 
@@ -38,3 +44,11 @@ if os.name == 'nt':
 
 import pymqi
 ```
+
+## Licence
+
+From the `licences/English.txt` found in the IBM MQ C redist archive:
+
+> Redistributables may be distributed, in object-code form, only as part of Licensee's value-added application that was developed using the Program ("Licensee's Application") and only to support use of Licensee's Application.
+
+I guess that this Python Package "application" adds some value, so the license is ok.

@@ -9,11 +9,6 @@ from setuptools import setup, Extension
 data_files = []
 mq_file_path = os.environ.get('MQ_FILE_PATH', '')
 
-if not mq_file_path:
-    raise Exception(
-        "Use the MQ_FILE_PATH environment variable to identify "
-        "the path where IBM MQ C redistributables are located.")
-
 if os.name == 'nt':
     data_files = [
         ('ibm-mq/', [
@@ -80,15 +75,22 @@ else:
             ]),
     ]
 
-setup(
-    data_files=data_files,
-    ext_modules=[
-        Extension(
+if not mq_file_path and os.environ.get('CI', '') == '':
+    raise Exception(
+        "Use the MQ_FILE_PATH environment variable to identify "
+        "the path where IBM MQ C redistributables are located.")
+
+if not mq_file_path:
+    # We are in the CI environment, so just build a noop package.
+    setup()
+else:
+    setup(
+        data_files=data_files,
+        ext_modules=[Extension(
             "mqcredist",
             sources=["mqcredist.c"],
             define_macros=[("Py_LIMITED_API", "0x03090000")],
             py_limited_api=True,
-        )
-    ],
-    options={"bdist_wheel": {"py_limited_api": "cp39"}},
-)
+        )],
+        options={"bdist_wheel": {"py_limited_api": "cp39"}},
+    )

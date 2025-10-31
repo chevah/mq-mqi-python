@@ -204,7 +204,7 @@ and in the `dev-patterns repository
 
 # Define how the C module gets built. Set flags to build using the Python 3.9
 # Limited API which should make the binary extension forwards compatible.
-mqi_extension = Extension('ibmmq.ibmmqc', c_source,
+mqi_extension = [Extension('ibmmq.ibmmqc', c_source,
                           define_macros=[('PYVERSION', '"' + VERSION + '"'),
                                          ('Py_LIMITED_API', _ABI_LIMITS['Py_LIMITED_API'])
                                          ],
@@ -212,7 +212,13 @@ mqi_extension = Extension('ibmmq.ibmmqc', c_source,
                           library_dirs=library_dirs,
                           include_dirs=include_dirs,
                           extra_link_args=ld_flags,
-                          libraries=libraries)
+                          libraries=libraries)]
+
+# This is a hack for the Chevah project, to generate a dummy wheel
+# to be used as a placeholder for macOS and other unsupported platforms.
+if not found_headers:
+    mqi_extension = []
+
 
 setup(name='ibmmq',
       version=VERSION,
@@ -236,6 +242,6 @@ setup(name='ibmmq',
                    'Programming Language :: C',
                    'Programming Language :: Python',
                    'Topic :: Software Development :: Libraries :: Python Modules'],
-      ext_modules=[mqi_extension],
+      ext_modules=mqi_extension,
       options={"bdist_wheel": {"py_limited_api": _ABI_LIMITS["py_limited_api"]}},
 )

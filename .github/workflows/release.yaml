@@ -54,10 +54,16 @@ jobs:
         run: |
           python tools/getRedistributables.py "$WINDOWS_URL" ibm-mq-c
 
-      - name: Build wheels
+      - name: Build ibmmq wheels
         run: |
           export MQ_FILE_PATH=`pwd`/ibm-mq-c
           python -m build --wheel
+
+      - name: Build C redistributables wheels
+        run: |
+          export MQ_FILE_PATH=`pwd`/ibm-mq-c
+          python -m build --wheel code/mqcredist
+          mv code/mqcredist/dist/*.whl dist/
 
       - name: Check files
         run: ls -al dist/

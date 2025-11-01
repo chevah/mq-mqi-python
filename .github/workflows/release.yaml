@@ -81,6 +81,7 @@ jobs:
   build_sdist:
     name: Build source distribution
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -110,9 +111,28 @@ jobs:
   upload_pypi:
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
+
+    services:
+      # Start an IBM MQ server similar to the one
+      # from code/tests/runContainer.sh
+      mq-server:
+        image: icr.io/ibm-messaging/mq:latest
+        env:
+          LICENSE: accept
+          MQ_QMGR_NAME: QM1
+          MQ_ENABLE_EMBEDDED_WEB_SERVER: false
+          AMQ_IODELAY: 5000000
+          MQ_APP_PASSWORD: mqAppPassword
+        volumes:
+          - code/tests/pki/mykey:/etc/mqm/pki/keys/mykey
+        ports:
+          # We don't open 9443 as this is for admin purposes.
+          - 1414:1414
+
     permissions:
       # IMPORTANT: this permission is mandatory for trusted publishing
       id-token: write
+
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -122,6 +142,27 @@ jobs:
 
       - name: Check files
         run: ls -al dist/
+
+      # Run a minimal test to verify the package can connect to IBM MQ.
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: '3.9'
+
+      - name: Run minimal IBM MQ test
+        env:
+          PY_IBMMQ_TEST_TLS_SKIP: 0
+          PY_IBMMQ_TEST_TLS_KEY_REPO_LOCATION_CLIENT: code/tests/pki/client.p12
+        run: |
+          pip install dist/ibmmq-*-linux_x86_64.whl
+          python code/tests/test_tls.py
+
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v3
+      #   with:
+      #     limit-access-to-actor: true
 
       - name: Publish to PyPI - on tag
         # Skip upload to PyPI if we don't have a tag

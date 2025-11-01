@@ -56,6 +56,7 @@ jobs:
 
       - name: Build ibmmq wheels
         run: |
+          export CIBW_BEFORE_BUILD_LINUX="ls -al/ ; ls -al /project"
           export MQ_FILE_PATH=`pwd`/ibm-mq-c
           # Just make sure we don't have any leftover build files.
           rm -rf build/

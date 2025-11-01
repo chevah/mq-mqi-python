@@ -44,28 +44,24 @@ jobs:
         run: |
           python -m pip install -r tools/requirements-dev.txt
 
-      - name: Get IBM MQ C Linux Redistributables
+      - name: Build linux
         if: matrix.runs-on == 'ubuntu-latest'
         run: |
           python tools/getRedistributables.py "$LINUX_URL" ibm-mq-c
-
-      - name: Get IBM MQ C Windows Redistributables
-        if: matrix.runs-on == 'windows-latest'
-        run: |
-          python tools/getRedistributables.py "$WINDOWS_URL" ibm-mq-c
-
-      - name: Build ibmmq wheels
-        run: |
-          export CIBW_BEFORE_BUILD_LINUX="ls -al/ ; ls -al /project"
-          export MQ_FILE_PATH=`pwd`/ibm-mq-c
+          export MQ_FILE_PATH=/project/ibm-mq-c
           # Just make sure we don't have any leftover build files.
           rm -rf build/
           python -m cibuildwheel --output-dir dist
+          rm -rf code/mqcredist/build/
+          python -m cibuildwheel --output-dir dist code/mqcredist
 
-      - name: Build C redistributables wheels
+      - name: Build windows
+        if: matrix.runs-on == 'windows-latest'
         run: |
+          python tools/getRedistributables.py "$WINDOWS_URL" ibm-mq-c
           export MQ_FILE_PATH=`pwd`/ibm-mq-c
-          # Just make sure we don't have any leftover build files.
+          rm -rf build/
+          python -m cibuildwheel --output-dir dist
           rm -rf code/mqcredist/build/
           python -m cibuildwheel --output-dir dist code/mqcredist
 

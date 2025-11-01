@@ -155,7 +155,7 @@ for d in include_dirs:
     if os.path.isfile(p):
         found_headers = True
 if not found_headers and not os.environ.get('CI', ''):
-    msg = "Cannot find MQ C header files.\n"
+    msg = f"Cannot find MQ C header files at '{custom_path}'.\n"
     msg += "Ensure you have already installed the MQ Client and SDK.\n"
     msg += "Use the MQ_FILE_PATH environment variable to identify a non-default location."
     raise FileNotFoundError(msg)

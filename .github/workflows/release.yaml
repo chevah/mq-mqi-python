@@ -56,16 +56,14 @@ jobs:
 
       - name: Build ibmmq wheels
         run: |
-          # cibuildwheel will mount the local filesystm under /host
-          export MQ_FILE_PATH=/host/`pwd`/ibm-mq-c
+          export MQ_FILE_PATH=`pwd`/ibm-mq-c
           # Just make sure we don't have any leftover build files.
           rm -rf build/
           python -m cibuildwheel --output-dir dist
 
       - name: Build C redistributables wheels
         run: |
-          # cibuildwheel will mount the local filesystm under /host
-          export MQ_FILE_PATH=/host/`pwd`/ibm-mq-c
+          export MQ_FILE_PATH=`pwd`/ibm-mq-c
           # Just make sure we don't have any leftover build files.
           rm -rf code/mqcredist/build/
           python -m cibuildwheel --output-dir dist code/mqcredist
@@ -97,7 +95,7 @@ jobs:
 
       - name: Install build
         run: |
-          python -m pip install -r tools/requirements-dev.txt
+          python -m pip install build
 
       - name: Build sdist and NOOP wheels
         run: python -m build

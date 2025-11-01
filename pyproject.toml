@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.cibuildwheel]
 environment-pass = ["MQ_FILE_PATH"]
+environment = "LD_LIBRARY_PATH='/project/ibm-mq-c/lib64;/project/ibm-mq-c/gskit9/lib64/'"
 # We enable all builds and then cherry-pick the platforms via the `build`
 # configuration below.
 enable = ["all"]

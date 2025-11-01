@@ -14,8 +14,8 @@ on:
 
 
 env:
-  LINUX_URL: "https://bin.chevah.com:20443/third-party-stuff/ibm-mqc-redist/9.4.3.1-IBM-MQC-Redist-LinuxX64.tar.gz"
-  WINDOWS_URL: "https://bin.chevah.com:20443/third-party-stuff/ibm-mqc-redist/9.4.3.1-IBM-MQC-Redist-Win64.zip"
+  LINUX_URL: "https://bin.chevah.com:20443/third-party-stuff/ibm-mqc-redist/9.4.4.0-IBM-MQC-Redist-LinuxX64.tar.gz"
+  WINDOWS_URL: "https://bin.chevah.com:20443/third-party-stuff/ibm-mqc-redist/9.4.4.0-IBM-MQC-Redist-Win64.zip"
 
 defaults:
   run:

@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mqcredist"
-version = "9.4.3"
+version = "9.4.4.0"
 description = "IBM MQ C library, distributed as wheels"
 maintainers = [
   {name = "Adi Roiban", email = "adiroiban@gmail.com"},

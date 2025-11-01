@@ -220,6 +220,16 @@ if not found_headers:
     mqi_extension = []
 
 
+def get_plat_name():
+    """
+    A very simply implementation to set GBLIC platform for Linux.
+    """
+    if os.name == 'nt':
+        return 'win_amd64'
+    else:
+        return 'manylinux_x86_64'
+
+
 setup(name='ibmmq',
       version=VERSION,
       description='Python Extension for IBM MQ',
@@ -243,5 +253,8 @@ setup(name='ibmmq',
                    'Programming Language :: Python',
                    'Topic :: Software Development :: Libraries :: Python Modules'],
       ext_modules=mqi_extension,
-      options={"bdist_wheel": {"py_limited_api": _ABI_LIMITS["py_limited_api"]}},
+      options={"bdist_wheel": {
+          "py_limited_api": _ABI_LIMITS["py_limited_api"],
+          "plat_name": get_plat_name(),
+          }},
 )

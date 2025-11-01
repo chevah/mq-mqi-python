@@ -3,13 +3,3 @@
 [build-system]
 requires = ["setuptools >= 75.0.0"]
 build-backend = "setuptools.build_meta"
-
-[tool.cibuildwheel]
-environment-pass = ["MQ_FILE_PATH"]
-environment = "LD_LIBRARY_PATH='/project/ibm-mq-c/lib64;/project/ibm-mq-c/gskit9/lib64/'"
-# We enable all builds and then cherry-pick the platforms via the `build`
-# configuration below.
-enable = ["all"]
-# See https://cibuildwheel.pypa.io/en/stable/options/#build-skip
-# Not sure why it was failing on PyPy 3.11.
-build = "cp39-manylinux_x86_64 cp39-win_amd64"

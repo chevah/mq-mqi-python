@@ -81,6 +81,17 @@ if not mq_file_path and os.environ.get('CI', '') == '':
         "Use the MQ_FILE_PATH environment variable to identify "
         "the path where IBM MQ C redistributables are located.")
 
+
+def get_plat_name():
+    """
+    A very simply implementation to set GBLIC platform for Linux.
+    """
+    if os.name == 'nt':
+        return 'win_amd64'
+    else:
+        return 'manylinux_x86_64'
+
+
 if not mq_file_path:
     # We are in the CI environment, so just build a noop package.
     setup()
@@ -93,5 +104,8 @@ else:
             define_macros=[("Py_LIMITED_API", "0x03090000")],
             py_limited_api=True,
         )],
-        options={"bdist_wheel": {"py_limited_api": "cp39"}},
+        options={"bdist_wheel": {
+            "py_limited_api": "cp39",
+            "plat_name": get_plat_name(),
+            }},
     )

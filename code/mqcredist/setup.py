@@ -9,12 +9,15 @@ from setuptools import setup, Extension
 data_files = []
 mq_file_path = os.environ.get('MQ_FILE_PATH', '')
 
-if os.name == 'nt':
+# To help do some testing on Linux:
+# $ TARGET_OS_NAME=nt python -m build --wheel code/mqcredist
+target_os = os.environ.get('TARGET_OS_NAME', os.name).lower()
+
+if target_os == 'nt':
     data_files = [
         ('ibm-mq/', [
             mq_file_path + '/bin64/mqe.dll',
-            mq_file_path + '/bin64/mqic.dll',
-            mq_file_path + '/bin64/mqim.dll',
+            mq_file_path + '/bin64/mqm.dll',
             ]),
         ('ibm-mq/conv', [
             mq_file_path + '/conv/ccsid.tbl',
@@ -55,21 +58,21 @@ else:
             mq_file_path + '/lib64/libmqm_r.so',
             mq_file_path + '/lib64/libcurl.so',
             ]),
-        ('lib/ibm-mq/gskit8/lib64', [
-            mq_file_path + '/gskit8/lib64/libgsk8acmeidup_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8cms_64.so',  # curl
-            mq_file_path + '/gskit8/lib64/libgsk8dbfl_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8iccs_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8kicc_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8km_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8p11_64.so',
-            mq_file_path + '/gskit8/lib64/libgsk8ssl_64.so',  # curl
-            mq_file_path + '/gskit8/lib64/libgsk8sys_64.so',  # curl
-            mq_file_path + '/gskit8/lib64/libgsk8valn_64.so',
+        ('lib/ibm-mq/gskit9/lib64', [
+            mq_file_path + '/gskit9/lib64/libgsk9acmeidup_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9cms_64.so',  # curl
+            mq_file_path + '/gskit9/lib64/libgsk9dbfl_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9drld_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9kicc_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9km_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9p11_64.so',
+            mq_file_path + '/gskit9/lib64/libgsk9ssl_64.so',  # curl
+            mq_file_path + '/gskit9/lib64/libgsk9valn_64.so',
+            mq_file_path + '/gskit9/lib64/libickcs_64.so',
             ]),
-        ('lib/ibm-mq/gskit8/lib64/N/icc/icclib', [
-            mq_file_path + '/gskit8/lib64/N/icc/icclib/ICCSIG.txt',
-            mq_file_path + '/gskit8/lib64/N/icc/icclib/libicclib085.so',  # curl
+        ('lib/ibm-mq/gskit9/lib64/N/icc/icclib', [
+            mq_file_path + '/gskit9/lib64/N/icc/icclib/ICCSIG.txt',
+            mq_file_path + '/gskit9/lib64/N/icc/icclib/libicclib085.so',  # curl
             ]),
     ]
 

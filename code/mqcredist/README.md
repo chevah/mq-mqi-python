@@ -17,7 +17,7 @@ You need to use `LD_LIBRARY_PATH` to load the IBM C shared libraries.
 They will be installed inside the virtual environment, at `lib/ibm-mq` path.
 
 ```
-export LD_LIBRARY_PATH=YOUR_VENV/lib/ibm-mq/lib64/:YOUR_VENV/lib/ibm-mq/gskit8/lib64/
+export LD_LIBRARY_PATH=YOUR_VENV/lib/ibm-mq/lib64/:YOUR_VENV/lib/ibm-mq/gskit9/lib64/
 python your_ibm_mq_sample_code.py
 ```
 

@@ -14,6 +14,7 @@ if os.name == 'nt':
         ('ibm-mq/', [
             mq_file_path + '/bin64/mqe.dll',
             mq_file_path + '/bin64/mqic.dll',
+            mq_file_path + '/bin64/mqim.dll',
             ]),
         ('ibm-mq/conv', [
             mq_file_path + '/conv/ccsid.tbl',
@@ -34,9 +35,8 @@ if os.name == 'nt':
             mq_file_path + '/gskit8/lib64/gsk8ssl_64.dll',
             mq_file_path + '/gskit8/lib64/gsk8sys_64.dll',
             mq_file_path + '/gskit8/lib64/gsk8valn_64.dll',
-            # VC++ 2012 runtime dependencies.
-            'c:/windows/system32/msvcp120.dll',
-            'c:/windows/system32/msvcr120.dll',
+            # VC++ 2015 runtime dependencies.
+            'c:/windows/system32/vcruntime140.dll',
             ]),
         ('ibm-mq/gskit8/lib64/N/icc/icclib', [
             mq_file_path + '/gskit8/lib64/N/icc/icclib/ICCSIG.txt',
@@ -52,7 +52,7 @@ else:
             ]),
         ('lib/ibm-mq/lib64', [
             mq_file_path + '/lib64/libmqe_r.so',
-            mq_file_path + '/lib64/libmqe_r.so',
+            mq_file_path + '/lib64/libmqm_r.so',
             mq_file_path + '/lib64/libcurl.so',
             ]),
         ('lib/ibm-mq/gskit8/lib64', [

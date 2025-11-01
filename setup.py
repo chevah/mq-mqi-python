@@ -230,7 +230,7 @@ def get_plat_name():
     if os.name == 'nt':
         return 'win_amd64'
 
-    return 'manylinux_x86_64'
+    return 'manylinux_2_17_x86_64'
 
 
 setup(name='ibmmq',

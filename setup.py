@@ -224,10 +224,13 @@ def get_plat_name():
     """
     A very simply implementation to set GBLIC platform for Linux.
     """
+    if not found_headers:
+        return 'none'
+
     if os.name == 'nt':
         return 'win_amd64'
-    else:
-        return 'manylinux_x86_64'
+
+    return 'manylinux_x86_64'
 
 
 setup(name='ibmmq',

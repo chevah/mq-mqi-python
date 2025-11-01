@@ -86,6 +86,9 @@ def get_plat_name():
     """
     A very simply implementation to set GBLIC platform for Linux.
     """
+    if not mq_file_path:
+        return 'none'
+
     if os.name == 'nt':
         return 'win_amd64'
     else:

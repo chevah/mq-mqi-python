@@ -39,7 +39,12 @@ if target_os == 'nt':
             mq_file_path + '/gskit8/lib64/gsk8sys_64.dll',
             mq_file_path + '/gskit8/lib64/gsk8valn_64.dll',
             # VC++ 2015 runtime dependencies.
+            # Needed by ibmmq
             'c:/windows/system32/vcruntime140.dll',
+            # VC++ 2012 runtime dependencies.
+            # Needed by gskit8
+            'c:/windows/system32/msvcp120.dll',
+            'c:/windows/system32/msvcr120.dll',
             ]),
         ('ibm-mq/gskit8/lib64/N/icc/icclib', [
             mq_file_path + '/gskit8/lib64/N/icc/icclib/ICCSIG.txt',

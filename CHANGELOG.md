@@ -2,6 +2,9 @@
 # Changelog
 Newest updates are at the top of this file.
 
+## 2026 Jul 06 - no version change
+* Enable binary wheel for Linux x64
+
 ## 2026 Jun 17 - V2.1.0
 * Support for MQ 10
   * New MQCD fields for QuantumSafe features

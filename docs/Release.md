@@ -7,10 +7,6 @@ create the binary extension module.
 Even with binary wheels, you must install independently the MQ Client components. The wheels do not include the MQ
 product libraries.
 
-NOTE: For version 2.1.0, there is not a binary wheel supplied for Linux x64. Additional changes are required to
-the extension module to ensure the `manylinux` packaging works cleanly, and I didn't want to delay the rest of the
-release.
-
 The C extension module is fairly agnostic as to the version of Python it's running with. It conforms to the [Limited
 API](https://docs.python.org/3/c-api/stable.html#limited-c-api) at the Python 3.9 level. This ought to make it easier to
 redistribute applications within your own environment, compiling only once and copying the `.so` file to other
@@ -25,6 +21,9 @@ to run on PR creation), but they are commented out. The Redistributable Client p
 for Windows; the MacOS Developer Toolkit is used to do the same for that platform.
 
 The `runActions.sh` script controls the execution of the action, and the downloads of the sdist and wheel artifacts.
+
+**Note:** The Action sometimes fails because of a problem resolving the address of the IBM download site for the Redist
+Client package. There doesn't seem to be anything that can be done about that, other than retrying the Action.
 
 ### PyPI Servers
 The `tools` subdirectory also includes scripts to let you run your own PyPI-equivalent local server, and to upload

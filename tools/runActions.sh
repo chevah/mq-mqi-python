@@ -53,4 +53,6 @@ then
   ls -lrt $dist
 fi
 
+exit $rc
+
 

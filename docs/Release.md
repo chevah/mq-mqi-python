@@ -18,12 +18,13 @@ wheels, but not to automatically upload them to PyPI. This is to allow local che
 own workflows, including use of other PyPI-equivalent servers for testing of the images. The build is triggered manually
 with the gh `workflow_dispatch` operation. The workflow configuration file does have some automatic steps (for example
 to run on PR creation), but they are commented out. The Redistributable Client packages are used to build binary wheels
-for Windows; the MacOS Developer Toolkit is used to do the same for that platform.
+for Windows and Linux x64; the MacOS Developer Toolkit is used to do the same for that platform.
 
 The `runActions.sh` script controls the execution of the action, and the downloads of the sdist and wheel artifacts.
 
 **Note:** The Action sometimes fails because of a problem resolving the address of the IBM download site for the Redist
-Client package. There doesn't seem to be anything that can be done about that, other than retrying the Action.
+Client package. The "Get IBM MQ C SDK" step is the one that tries to do that. There doesn't seem to be anything that can
+be done about this failure, other than rerunning the Action a few minutes later.
 
 ### PyPI Servers
 The `tools` subdirectory also includes scripts to let you run your own PyPI-equivalent local server, and to upload

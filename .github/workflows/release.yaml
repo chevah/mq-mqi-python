@@ -76,8 +76,11 @@ jobs:
           python-version: '3.13'
 
       - name: Install deps
-        run: |
-          python -m pip install -r tools/requirements-dev.txt
+        run: >-
+          case "$ImageOS" in
+          win22) python -m pip install -r tools/requirements-dev-win.txt;;
+          *) python -m pip install -r tools/requirements-dev.txt;;
+          esac
 
       # Available env vars that we could use to select how to download client code:
       #  ImageOS  = win22,      ubuntu22,  macos14

@@ -37,8 +37,9 @@ env:
   VRMF: "10.0.0.0"
 
   # Where do we get the redist client or MacOS toolkit from? They are public URLs.
-  REDIST_ROOT: "https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqdev/redist/"
-  MACOS_ROOT: "https://public.dhe.ibm.com/ibmdl/export/pub/software/websphere/messaging/mqdev/mactoolkit/"
+  HOST: "https://public.dhe.ibm.com"
+  REDIST_ROOT: "ibmdl/export/pub/software/websphere/messaging/mqdev/redist/"
+  MACOS_ROOT: "ibmdl/export/pub/software/websphere/messaging/mqdev/mactoolkit/"
   LINUX_FILE: "IBM-MQC-Redist-LinuxX64.tar.gz"
   WINDOWS_FILE: "IBM-MQC-Redist-Win64.zip"
   MACOS_FILE: "IBM-MQ-DevToolkit-MacOS.pkg"
@@ -61,7 +62,7 @@ jobs:
       matrix:
         buildplat:
         - [windows-2022, win_amd64, ""]
-        #- [ubuntu-22.04, manylinux_x86_64, ""]
+        - [ubuntu-22.04, manylinux_x86_64, ""]
         - [macos-14, macosx_arm64, ""]
 
         python: ["cp39"]
@@ -104,9 +105,9 @@ jobs:
       - name: Get IBM MQ C SDK
         run: >-
           case "$ImageOS" in
-          win22) python tools/getRedistributables.py "$REDIST_ROOT/$VRMF-$WINDOWS_FILE" $MQ_FILE_PATH;;
-          ubuntu22) python tools/getRedistributables.py "$REDIST_ROOT/$VRMF-$LINUX_FILE" $MQ_FILE_PATH;;
-          macos14)  python tools/getRedistributables.py "$MACOS_ROOT/$VRMF-$MACOS_FILE" tmpPkg;
+          win22) python tools/getRedistributables.py "$HOST/$REDIST_ROOT/$VRMF-$WINDOWS_FILE" $MQ_FILE_PATH;;
+          ubuntu22) python tools/getRedistributables.py "$HOST/$REDIST_ROOT/$VRMF-$LINUX_FILE" $MQ_FILE_PATH;;
+          macos14)  python tools/getRedistributables.py "$HOST/$MACOS_ROOT/$VRMF-$MACOS_FILE" tmpPkg;
           sudo mkdir -p /opt/mqm || true;
           sudo installer -verbose -pkg tmpPkg-temp.pkg -target /opt/mqm && rm -rf tmpPkg-temp.pkg && ln -s /opt/mqm $MQ_FILE_PATH;
           ;;
@@ -130,7 +131,7 @@ jobs:
           # re-uploaded that wheel to PyPI. So we will just do a simple copy.
           CIBW_REPAIR_WHEEL_COMMAND_WINDOWS: cp {wheel} {dest_dir}
           CIBW_REPAIR_WHEEL_COMMAND_MACOS: cp {wheel} {dest_dir}
-          CIBW_REPAIR_WHEEL_COMMAND_LINUX: cp {wheel} {dest_dir}
+          CIBW_REPAIR_WHEEL_COMMAND_LINUX: auditwheel repair {wheel} --exclude libmqm* --only-plat && cp wheelhouse/*whl {dest_dir}
 
 
         run: |
